@@ -1,0 +1,25 @@
+{
+  "name": "blackjack-game",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "npx ts-node src/index.ts"
+  },
+  "keywords": [
+    "TypeScript",
+    "Game",
+    "BlackJack Game",
+    "Deck Game"
+  ],
+  "author": "EvandroOrso",
+  "license": "MIT",
+  "description": "A blackjack game made to train my TypeScript skills.",
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
