@@ -2,7 +2,7 @@ import PromptSync from "prompt-sync";
 const prompt = PromptSync();
 import deck from "./deck";
 import player from "./player";
-import { shuffleDeck, getInitialCards } from "./utils";
+import { shuffleDeck, getInitialCards, getHandTotal } from "./utils";
 
 // Data
 let isGameRunning = false;
@@ -29,7 +29,6 @@ function initializeGame() {
     playerHand.push(initialCards[0].card2);
     dealerHand.push(initialCards[1].card1);
     dealerHand.push(initialCards[1].card2);
-
 }
 
 initializeGame();

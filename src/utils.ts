@@ -24,3 +24,26 @@ export function getInitialCards(deck: string[]): InitialCards[] {
 
     return [playerCards, dealerCards];
 }
+
+export function getHandTotal(hand: string[]): number {
+    let total = 0;
+    
+    hand.forEach(card => {
+        console.log(card.slice(0, -1));
+        switch(card.slice(0, -1)) {
+            case "A":
+                total += 11;
+                break;
+            case "Q":
+            case "J":
+            case "K":
+                total += 10;
+                break;
+            default:
+                total += Number(card.slice(0, -1));
+                break;
+        }
+    })
+
+    return total;
+}
