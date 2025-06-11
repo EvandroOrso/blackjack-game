@@ -38,8 +38,23 @@ function initializeGame() {
     dealerTotal = getHandTotal(dealerHand);
 
     // Shows hands
-    console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
-    console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);
+    if(playerTotal === 21) {
+        console.log(`Your hand: ${playerHand.join(", ")} (Blackjack!)`);
+        console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);
+        console.log(`You win $${bet}! (3:2 payout for Blackjack)`);
+        player.balance += bet * 1.5;
+        console.log(`Player's funds: $${player.balance}`);
+    } else if(dealerTotal === 21) {
+        console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
+        console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);
+        console.log(`Dealer reveals: ${dealerHand.join(", ")} (Blackjack!)`);
+        console.log(`Dealer has Blackjack. You lose ${bet}`);
+        player.balance -= bet;
+        console.log(`Player's funds: $${player.balance}`);
+    } else {
+        console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
+        console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);
+    }
 
     // Player action
     do {
@@ -48,11 +63,50 @@ function initializeGame() {
             playerHand.push(shuffledDeck[cardIndex]); // Draw a new card
             cardIndex++;
             playerTotal = getHandTotal(playerHand);
+
+            if(playerTotal > 21) {
+                console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal} - Bust!)`);
+                console.log(`Dealer's hand: ${dealerHand.join(", ")} (Total: ${dealerTotal})`);
+                console.log(`You bust and lose $${bet}`);
+                player.balance -= bet;
+                console.log(`Player's funds: $${player.balance}`);
+                return;
+            }
+
             console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
             if(!isGameRunning) return; // Leaves while loop
         } else if(action.toLowerCase().trim() === "stand") {
-            console.log("stand");
-            return false;
+            console.log(`Dealer's hand: ${dealerHand.join(", ")} (Total: ${dealerTotal})`);
+
+            if(dealerTotal < 17) {
+                dealerHand.push(shuffledDeck[cardIndex]); // Draw a new card
+                cardIndex++;
+                dealerTotal = getHandTotal(dealerHand);
+
+                if(dealerTotal > 21) {
+                    console.log(`Dealer hits: ${dealerHand.join(", ")} (Total: ${dealerTotal} - Dealer Busts!)`);
+                    console.log(`You win $${bet}`);
+                    player.balance += bet;
+                    console.log(`Player's funds: $${player.balance}`);
+                    return;
+                } else {
+                    console.log(`Dealer hits: ${dealerHand.join(", ")} (Total: ${dealerTotal})`);
+                }
+            }
+
+            if(playerTotal > dealerTotal) {
+                console.log(`You win $${bet}!`);
+                player.balance += bet;
+                console.log(`Player's funds: $${player.balance}`);
+            } else if(playerTotal === dealerTotal) {
+                console.log(`It's a push! Your bet is returned.`);
+            } else {
+                console.log(`Dealer wins. You lose $${bet}!`);
+                player.balance -= bet;
+                console.log(`Player's funds: $${player.balance}`);
+            }
+            
+            return;
         }
     } while(true);
 }
