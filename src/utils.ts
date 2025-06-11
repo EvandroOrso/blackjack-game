@@ -29,7 +29,6 @@ export function getHandTotal(hand: string[]): number {
     let total = 0;
     
     hand.forEach(card => {
-        console.log(card.slice(0, -1));
         switch(card.slice(0, -1)) {
             case "A":
                 total += 11;
