@@ -44,6 +44,7 @@ function initializeGame() {
         console.log(`You win $${bet}! (3:2 payout for Blackjack)`);
         player.balance += bet * 1.5;
         console.log(`Player's funds: $${player.balance}`);
+        return;
     } else if(dealerTotal === 21) {
         console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
         console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);
@@ -51,6 +52,7 @@ function initializeGame() {
         console.log(`Dealer has Blackjack. You lose ${bet}`);
         player.balance -= bet;
         console.log(`Player's funds: $${player.balance}`);
+        return;
     } else {
         console.log(`Your hand: ${playerHand.join(", ")} (Total: ${playerTotal})`);
         console.log(`Dealer's hand: ${dealerHand[0]}, [hidden]`);

@@ -27,11 +27,13 @@ export function getInitialCards(deck: string[]): InitialCards[] {
 
 export function getHandTotal(hand: string[]): number {
     let total = 0;
+    let aceCount = 0;
     
     hand.forEach(card => {
         switch(card.slice(0, -1)) {
             case "A":
                 total += 11;
+                aceCount += 1;
                 break;
             case "Q":
             case "J":
@@ -41,6 +43,11 @@ export function getHandTotal(hand: string[]): number {
             default:
                 total += Number(card.slice(0, -1));
                 break;
+        }
+
+        while(total > 21 && aceCount > 0) {
+            total -= 10;
+            aceCount--;
         }
     })
 
